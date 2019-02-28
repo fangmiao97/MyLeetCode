@@ -1,0 +1,64 @@
+class Solution {
+    public int numRookCaptures(char[][] board) {
+        //将二维数组保存在ArrayList中（转成一位数组），进行余的运算，就不要考虑二维了
+        //首先将char[][]保存在attayList中
+        ArrayList chessList = new ArrayList(100);
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                chessList.add(board[i][j]);
+            }
+        }
+
+        //先找R
+        int indexOfR = chessList.indexOf('R');
+        int x = indexOfR % 8;
+        int y = indexOfR / 8;
+
+        int num = 0;
+        //四个方向分别找p和B，如果先找到B则结束，如果先找到p则输出数加一再结束
+        //north
+        for (int i = 1; i < y + 1; i++) {
+            int nextIndex = indexOfR - 8 * i;
+            if (chessList.get(nextIndex).equals('B')) {
+                break;
+            } else if (chessList.get(nextIndex).equals('p')) {
+                num++;
+                break;
+            } else continue;
+        }
+
+        //south
+        for (int i = 1; i < 8 - y; i++) {
+            int nextIndex = indexOfR + 8 * i;
+            if (chessList.get(nextIndex).equals('B')) {
+                break;
+            } else if (chessList.get(nextIndex).equals('p')) {
+                num++;
+                break;
+            } else continue;
+        }
+
+        //west
+        for (int i = 1; i < x + 1; i++) {
+            int nextIndex = indexOfR - 1 * i;
+            if (chessList.get(nextIndex).equals('B')) {
+                break;
+            } else if (chessList.get(nextIndex).equals('p')) {
+                num++;
+                break;
+            } else continue;
+        }
+
+        //east
+        for (int i = 1; i < 8 - x; i++) {
+            int nextIndex = indexOfR + 1 * i;
+            if (chessList.get(nextIndex).equals('B')) {
+                break;
+            } else if (chessList.get(nextIndex).equals('p')) {
+                num++;
+                break;
+            } else continue;
+        }
+        return num;
+    }
+}
