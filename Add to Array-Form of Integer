@@ -1,6 +1,12 @@
+/**
+For a non-negative integer X, the array-form of X is an array of its digits in left to right order. 
+For example, if X = 1231, then the array form is [1,2,3,1].
+Given the array-form A of a non-negative integer X, return the array-form of the integer X+K.
+*/
+
 class Solution {
     public List<Integer> addToArrayForm(int[] A, int K) {
-        List<Integer> result = new ArrayList<Integer>(A.length + 1);
+        List<Integer> result = new LinkedList<Integer>();//在0位置插入，所以选择LinkedList
         for (int i = A.length - 1, carry = 0; i >= 0 || K > 0 || carry > 0; i--, K /= 10) {
         int d1 = i >= 0 ? A[i] : 0;
         int d2 = K % 10;
