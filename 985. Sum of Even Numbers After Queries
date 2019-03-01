@@ -1,0 +1,35 @@
+public int[] sumEvenAfterQueries(int[] A, int[][] queries) {
+        //存储A、拿到每次query的val和index、完成计算并修改A、找到A中的偶数并相加完成计算并放到output的array中
+        int resultLength = queries.length;
+
+        int[] result = new int[resultLength];
+
+        //将初始的偶数情况保存到HashMap中
+        Map<Integer, Integer> evenNumIndexArray = new HashMap<>();
+        int evenValue = 0;
+        for (int i = 0 ; i <A.length ; i++){
+            if (A[i] % 2 == 0){
+                evenNumIndexArray.put(i, i);
+                evenValue += A[i];
+            }
+        }
+
+        for (int i = 0; i < resultLength; i++) {
+            //arrayA.add(queries[i][1], queries[i][0] + arrayA.get(queries[i][1]));
+            int org = A[queries[i][1]];
+            A[queries[i][1]] = A[queries[i][1]] + queries[i][0];
+            if (A[queries[i][1]] % 2 == 0 && !evenNumIndexArray.containsKey(queries[i][1])){//这一位原来是奇数，现在完成计算后变成偶数，则在原有的基础上加
+               evenValue += A[queries[i][1]];
+               evenNumIndexArray.put(queries[i][1], queries[i][1]);
+            }else if (A[queries[i][1]] % 2 == 0 && evenNumIndexArray.containsKey(queries[i][1])){
+                evenValue += queries[i][0];
+            }else if (A[queries[i][1]] % 2 != 0 && evenNumIndexArray.containsKey(queries[i][1])){
+               evenValue -= org;
+               evenNumIndexArray.remove(queries[i][1]);
+            }
+
+            result[i] = evenValue;
+        }
+
+        return result;
+    }
