@@ -8,7 +8,6 @@ class Solution {
         }
 
         int temp = 1;//零时存储当前序列的长度
-
         int flag = 0;//大于：1 小与：-1 等于:0
         //先把前两个数进行比较，找到起始flag
         if (A[0] < A[1]){
@@ -51,3 +50,9 @@ class Solution {
         return res;
     }
 }
+
+//test case
+/**
+[9,4,2,10,7,8,8,1,9]
+[100,100,100]
+*/
