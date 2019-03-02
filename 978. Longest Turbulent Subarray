@@ -1,0 +1,53 @@
+class Solution {
+    public int maxTurbulenceSize(int[] A) {
+        int res = 1;//最短也等于1
+        if (A.length == 1){
+            return res;
+        }else if (A.length == 2){
+            return res = 2;
+        }
+
+        int temp = 1;//零时存储当前序列的长度
+
+        int flag = 0;//大于：1 小与：-1 等于:0
+        //先把前两个数进行比较，找到起始flag
+        if (A[0] < A[1]){
+            flag = -1;
+            temp = 2;
+        }else if (A[0] > A[1]){
+            flag = 1;
+            temp = 2;
+        }
+
+        for (int i = 1; i < A.length - 1; i++){
+
+            if (A[i] == A[i+1]){
+                res = res > temp ? res : temp;
+                temp = 1;
+                continue;
+            }else if(flag == 0){
+                if (A[i] < A[i+1]){
+                    flag = -1;
+                    temp = 1;
+                    continue;
+                }else if (A[i] > A[i+1]){
+                    flag = 1;
+                    temp = 1;
+                    continue;
+                }
+                temp = 1;
+                continue;
+            }else if (((A[i] < A[i+1] ? -1 : 1) * flag) == 1){//如果符号相同则更新子序列长度，flag不变
+                res = res > temp ? res : temp;
+                temp = 2;//temp需要复原
+                continue;
+            }else if(((A[i] < A[i+1] ? -1 : 1) * flag) == -1){//符号不相同
+                temp += 1;//长度增加
+                flag *= -1;//符号翻转
+                res = res > temp ? res : temp;
+                continue;
+            }
+        }
+        return res;
+    }
+}
