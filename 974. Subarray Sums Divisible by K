@@ -1,0 +1,27 @@
+class Solution {
+    public int subarraysDivByK(int[] A, int K) {
+        //前缀和，连续的子数列可以通过两个前缀和相减得到
+        //p[i]表示数列前i个值之和，则某连续子数列的和可表示为p[j]-p[i]
+        //即（p[j]-p[i]） % K == 0， 则这个子数列满足要求。即p[j] % K == p[i] % K
+        //将前缀和p[i]%K的结果保存，因为不需要给出具体的子数列，所以根据mod K之后的结果进行保存
+        //则例子的前缀和[0,4,9,9,7,4,5]，mod K之后 {[0,2],[2,1],[4,4]}即mod K之后等于0的有两个，等于2的有一个...
+        //在mod K结果相同的前缀和的组中取2个，就找到了个数，即C(2,2) + C(2,4) = 7
+        
+        int[] ps = new int[A.length + 1];
+        
+        for(int i = 0; i < A.length; i++){
+            ps[i+1] = p[i] + A[i];
+        }
+        
+        int[] reminderCount = new int[K];//前项和mod K之后的余数的情况
+        
+        for(int i : ps){
+            reminderCount[(x % K + K) % K]++;//java中mod可能出现负数 如 -1 % 5 = -1
+        }
+        
+        int res = 0;
+        for(int v : reminderCount)
+            res += v * (v - 1) / 2;
+        return res;
+    }
+}
