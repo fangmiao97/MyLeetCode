@@ -1,0 +1,13 @@
+class Solution {
+    public int singleNumber(int[] nums) {
+        
+        int ans = 0;
+        for(int  i = 0; i < nums.length; i++){
+            ans ^= nums[i];
+        }
+        
+        return ans;
+    }
+}
+
+//异或，相同的数字通过异或变成零了，只有出现过一次的数字才会保留
