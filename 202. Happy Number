@@ -1,0 +1,43 @@
+class Solution {
+    public boolean isHappy(int n) {
+        public boolean isHappy(int n) {
+        int d;
+        while (n > 9){
+            d = n;
+            n = 0;
+            while(d > 0){
+                n += Math.pow(d%10, 2);
+                d /= 10;
+            }
+        }
+        return n == 1 || n == 7;
+    }
+    }
+}
+//https://blog.csdn.net/Cloudox_/article/details/52593030
+
+public static boolean isHappy(int n) {//使用Set保存出现过的数字，如果经过计算之后的数字在Set里面，则返回false
+
+        Set<Integer> resultSet = new HashSet<>();
+
+        while (n != 1) {
+
+           int tmp = n;
+           int sum = 0;
+
+           while (tmp > 0){
+               int digit = tmp % 10;
+               sum += digit * digit;
+               tmp /= 10;
+           }
+
+           n = sum;
+
+           if (resultSet.contains(sum)){
+               return false;
+           }else resultSet.add(sum);
+
+        }
+
+        return true;
+    }
