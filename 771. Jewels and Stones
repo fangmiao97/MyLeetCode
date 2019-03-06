@@ -1,0 +1,33 @@
+class Solution {
+    public int numJewelsInStones(String J, String S) {
+        int count =0;
+        for (int i =0;i<S.length();i++){
+            if (J.contains(String.valueOf(S.charAt(i)))){
+                count++;
+             }
+            }
+        return count;
+    }
+}
+
+class Solution {
+    public int numJewelsInStones(String J, String S) {
+        int ans = 0;
+
+        char[] Jarray = J.toCharArray();
+        char[] Sarray = S.toCharArray();
+
+        Set<Character> Jset= new HashSet<>();
+
+        for (char j : Jarray){
+            Jset.add(j);
+        }
+
+        for (char s : Sarray){
+            if (Jset.contains(s))
+                ans++;
+        }
+
+        return ans;
+    }
+}
