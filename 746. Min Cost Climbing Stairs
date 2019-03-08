@@ -1,0 +1,23 @@
+class Solution {
+    public int minCostClimbingStairs(int[] cost) {
+        int ans = 0;
+
+        if (cost.length == 2){
+            return ans = Math.min(cost[0], cost[1]);
+        }
+
+        int[] optArray = new int[cost.length];
+
+        optArray[0] = 0;
+        optArray[1] = 0;
+        optArray[2] = Math.min(cost[0], cost[1]);
+
+        for (int i = 3; i < cost.length; i++) {
+            optArray[i] = Math.min(cost[i - 1] + optArray[i - 1], cost[i - 2] + optArray[i - 2]);
+        }
+
+        return Math.min(cost[cost.length - 1] + optArray[cost.length - 1], cost[cost.length - 2] + optArray[cost.length - 2]);
+    }
+}
+
+//动态规划
