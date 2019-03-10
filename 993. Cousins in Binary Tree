@@ -1,0 +1,54 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {//深度优先DFS
+    int xh,yh;
+    TreeNode xp;
+    TreeNode yp;
+    public boolean isCousins(TreeNode root, int x, int y) {
+        helper(root,root,x,y,0);
+        if(xh!=yh)return false; //height inequal
+        if(xp==yp)return false; //parent equal
+        return true;
+    }
+    public void helper(TreeNode parent,TreeNode root,int x,int y,int h){
+        if(root==null)return; 
+        if(root.val==x){
+            xh=h;
+            xp=parent;
+        }
+        if(root.val==y){
+            yh=h;
+            yp=parent;
+        }
+        helper(root,root.left,x,y,h+1);
+        helper(root,root.right,x,y,h+1);
+        return;
+    }
+}
+
+//BFS
+public boolean isCousins(TreeNode root, int x, int y) {
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        int depth = 0, xd = -2, yd = -1; // assign different dummy values to xd & yd, the depths of x & y.
+        while (!q.isEmpty()) {
+            for (int sz = q.size(); sz > 0; --sz) {
+                TreeNode n = q.poll();
+                if (n.val == x) { xd = depth; } // found x node
+                else if (n.val == y) { yd = depth; } // found y node
+                // if x and y share same parent.
+                if (n.left != null && n.right != null && (n.left.val == x && n.right.val == y || n.left.val == y && n.right.val == x)) { return false; }
+                if (n.left != null) { q.offer(n.left); }    
+                if (n.right != null) { q.offer(n.right); }    
+            }
+            ++depth; // increase BFS depth.
+        }
+        return xd == yd; // Are x & y in the same depth?
+    }
