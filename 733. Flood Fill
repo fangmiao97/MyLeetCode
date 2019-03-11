@@ -55,3 +55,26 @@ class Solution {
         return image;
     }
 }
+
+class Solution {
+  public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+   boolean[][] visited = new boolean[image.length][image[0].length]; 
+   dfs(image, new int[] {sr, sc}, visited, image[sr][sc], newColor);
+   return image;
+  }
+  
+  public void dfs(int[][] image, int[] coord, boolean[][] visited, int currColor, int newColor) {
+    int i = coord[0];
+    int j = coord[1];
+    if (i < 0 || j < 0 || i >= image.length 
+        || j >= image[0].length 
+        || image[i][j] != currColor
+        || visited[i][j]) return;
+    image[i][j] = newColor;
+    visited[i][j] = true;
+    dfs(image, new int[] {i+1, j}, visited, currColor, newColor);
+    dfs(image, new int[] {i-1, j}, visited, currColor, newColor);
+    dfs(image, new int[] {i, j+1}, visited, currColor, newColor);
+    dfs(image, new int[] {i, j-1}, visited, currColor, newColor);
+  }
+}
