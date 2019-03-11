@@ -1,0 +1,26 @@
+class Solution {
+    public int islandPerimeter(int[][] grid) {
+        int ans = 0;
+
+        for (int i = 0; i < grid.length ; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1)
+                    ans += cellPerimeter(grid, i, j);
+            }
+        }
+        return ans;
+    }
+    
+    public static int cellPerimeter(int[][] grid, int r, int c) {
+
+        int res = 4;
+
+        if (r != 0 && grid[r - 1][c] == 1) res--;
+        if (r != grid.length - 1 && grid[r + 1][c] == 1) res--;
+        if (c != 0 && grid[r][c - 1] == 1) res--;
+        if (c != grid[0].length - 1 && grid[r][c + 1] == 1) res--;
+
+        return res;
+    }
+}
+
