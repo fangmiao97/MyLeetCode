@@ -1,50 +1,50 @@
-import javafx.util.Pair;
+
 class Solution {
     public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
-        Queue<Pair<Integer, Integer>> flood = new LinkedList<>();
+        Queue<int[]> flood = new LinkedList<>();
 
         int orgColor = image[sr][sc];
-        Pair<Integer, Integer> starting = new Pair<>(sr, sc);
-        flood.offer(starting);
+        int[] startingCoord = {sr, sc};
+        flood.offer(startingCoord);
         image[sr][sc] = newColor;
 
         int[][] flooded = new int[image.length][image[0].length];
-        //flooded[sr][sc] = 1;
 
         while (!flood.isEmpty()) {
 
             for (int sz = flood.size(); sz > 0; --sz) {
-                Pair<Integer, Integer> point = flood.poll();
-                int r = point.getKey();
-                int c = point.getValue();
+                int[] point = flood.poll();
+                int r = point[0];
+                int c = point[1];
 
                 if (flooded[r][c] == 1) continue;
+
                 flooded[r][c] = 1;
 
                 if (c - 1 >= 0){
                     if (image[r][c - 1] == orgColor) {
-                        flood.offer(new Pair<>(r, c - 1));
+                        flood.offer(new int[]{r, c - 1});
                         image[r][c - 1] = newColor;
                         //flooded[r][c - 1] = 1;
                     }
                 }
                 if (c + 1 < image[0].length) {
                     if (image[r][c + 1] == orgColor) {
-                        flood.offer(new Pair<>(r, c + 1));
+                        flood.offer(new int[]{r, c + 1});
                         image[r][c + 1] = newColor;
                         //flooded[r][c + 1] = 1;
                     }
                 }
                 if (r - 1 >= 0) {
                     if (image[r - 1][c] == orgColor) {
-                         flood.offer(new Pair<>(r - 1, c));
+                         flood.offer(new int[]{r - 1, c});
                          image[r - 1][c] = newColor;
                          //flooded[r - 1][c] = 1;
                     }
                 }
                 if (r + 1 < image.length) {
                     if (image[r + 1][c] == orgColor) {
-                        flood.offer(new Pair<>(r + 1, c));
+                        flood.offer(new int[]{r + 1, c});
                         image[r + 1][c] = newColor;
                         //flooded[r + 1][c] = 1;
                     }
