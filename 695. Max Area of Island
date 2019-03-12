@@ -1,0 +1,44 @@
+class Solution {
+    public int maxAreaOfIsland(int[][] grid) {
+        int ans = 0;
+
+        int[][] landed = new int[grid.length][grid[0].length];
+
+        Queue<int[]> percentLand = new LinkedList<>();
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+
+                if (grid[i][j] == 0) continue;
+
+                int[] percentCoord = {i, j};
+                percentLand.offer(percentCoord);
+
+                int area = 0;
+
+                while (!percentLand.isEmpty()) {
+
+                    for (int sz = percentLand.size(); sz > 0; --sz) {
+
+                        int[] percentPoint = percentLand.poll();
+                        int r = percentPoint[0];
+                        int c = percentPoint[1];
+
+                        if (landed[r][c] == 1) continue;
+                        landed[r][c] = 1;
+                        area++;
+
+                        if (r > 0 && grid[r - 1][c] == 1) percentLand.offer(new int[]{r - 1, c});
+                        if (r < grid.length - 1 && grid[r + 1][c] == 1) percentLand.offer(new int[]{r + 1, c});
+                        if (c > 0 && grid[r][c - 1] == 1) percentLand.offer(new int[]{r, c - 1});
+                        if (c < grid[0].length - 1 && grid[r][c + 1] == 1) percentLand.offer(new int[]{r, c + 1});
+
+                    }
+                }
+                ans = area > ans ? area : ans;
+            }
+        }
+
+        return ans;
+    }
+}
