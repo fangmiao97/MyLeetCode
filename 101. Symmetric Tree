@@ -1,0 +1,48 @@
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+
+        Queue<TreeNode> l = new LinkedList<>();
+        Queue<TreeNode> r = new LinkedList<>();
+
+        l.offer(root);
+        r.offer(root);
+
+        while (!l.isEmpty() || !r.isEmpty()) {
+
+            if (l.size() != r.size()) return false;
+
+            for (int sz = l.size(); sz > 0; --sz) {
+                TreeNode n = l.poll();
+                TreeNode m = r.poll();
+
+                if (n == null && m == null) continue;
+                else if( n == null || m == null) return false;
+
+                if (n.val != m.val) return false;
+
+                l.offer(n.left);
+                l.offer(n.right);
+                
+                r.offer(m.right);
+                r.offer(m.left);
+            }
+        }
+        
+        return true;
+    }
+}
+
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+        return isMirrorTree(root.left, root.right);
+    }
+    
+    boolean isMirrorTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) return true;
+        if (p == null || q == null) return false;
+        if (p.val != q.val) return false;
+        return isMirrorTree(p.left, q.right) && isMirrorTree(p.right, q.left);
+    }
+}
