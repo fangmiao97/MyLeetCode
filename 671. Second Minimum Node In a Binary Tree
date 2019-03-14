@@ -1,0 +1,45 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int findSecondMinimumValue(TreeNode root) {
+        int res = -1;
+        int smellest = -1;
+        int secondSmell = -1;
+        
+        Queue<TreeNode> list = new LinkedList<>();
+        
+        list.offer(root);
+        smellest = Integer.MAX_VALUE;
+        secondSmell = Integer.MAX_VALUE;
+        
+        while(!list.isEmpty()) {
+            
+            for(int sz = list.size(); sz > 0; --sz) {
+                TreeNode node = list.poll();
+                
+                if(node == null) continue;
+                
+                list.offer(node.left);
+                list.offer(node.right);
+                
+                if(node.val <= smellest) {
+                    smellest = node.val;
+                    continue;
+                }
+                else if(node.val < secondSmell) secondSmell = node.val;
+                
+            }
+        }
+        
+        if(secondSmell == Integer.MAX_VALUE) return res;
+        
+        return secondSmell;
+    }
+}
