@@ -1,0 +1,11 @@
+public class Solution {
+    // you need treat n as an unsigned value
+    public int reverseBits(int n) {
+        int ans = 0;
+        for(int i = 31;i>=0;i--){
+            ans = ans |((n&1)<<i);//00000...01按位与之后移动到最后的位置，在和ans按位或
+            n = n>>1;
+        }
+        return ans;
+    }
+}
