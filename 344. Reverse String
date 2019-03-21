@@ -11,3 +11,10 @@ class Solution {
         }
     }
 }
+
+ public String reverse(String s) {
+      StringBuilder res=new StringBuilder();
+        for (int i = 0; i < s.length(); i++)
+            res.insert(0,s.charAt(i));
+        return res.toString();
+    }
