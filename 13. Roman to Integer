@@ -1,0 +1,59 @@
+class Solution {
+    
+    public final static Map<Character, Integer> map = new HashMap<>();
+    static{
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+    }
+    
+    public int romanToInt(String s) {
+        
+        int res = 0;
+        
+        for(int i = s.length() - 1; i >= 0; i--) {
+            
+            if(i == s.length() - 1) {
+                res += map.get(s.charAt(i));
+                continue;
+            }
+            
+            if(s.charAt(i) == 'I') {
+                if(s.charAt(i + 1) == 'V' || s.charAt(i + 1) == 'X') {
+                    res -= 1;
+                    continue;
+                }
+                res += 1;
+                continue;
+            }
+            
+            if(s.charAt(i) == 'X') {
+                if(s.charAt(i + 1) == 'L' || s.charAt(i + 1) == 'C') {
+                    res -= 10;
+                    continue;
+                }
+                res += 10;
+                continue;
+            }
+            
+            if(s.charAt(i) == 'C') {
+                if(s.charAt(i + 1) == 'D' || s.charAt(i + 1) == 'M') {
+                    res -= 100;
+                    continue;
+                }
+                res += 100;
+                continue;
+            }
+            
+            else {
+                res += map.get(s.charAt(i));
+            }
+        }
+        
+        return res;
+    }
+}
