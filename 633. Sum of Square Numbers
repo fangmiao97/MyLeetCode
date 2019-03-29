@@ -1,0 +1,39 @@
+class Solution {
+    public boolean judgeSquareSum(int c) {
+        if(c == 0 || isPerfectSquare(c))
+            return true;
+        
+        for(int i = 1; i < Square(c) + 1; i++) {
+            if(isPerfectSquare(c - i * i))
+                return true;
+        }
+        
+        return false;
+    }
+    
+    public static boolean isPerfectSquare(int num) {
+        long l = 0, r = num;
+        while(l < r) {
+            long mid = l + (r - l) / 2 + 1;
+            if(mid * mid > num) {
+                r = mid - 1;
+            } else l = mid;
+        }
+        
+        if(l * l == num)
+            return true;
+        else return false;
+    }
+    
+    public static int Square(int num) {
+        long l = 0, r = num;
+        while(l < r) {
+            long mid = l + (r - l) / 2 + 1;
+            if(mid * mid > num) {
+                r = mid - 1;
+            } else l = mid;
+        }
+        
+        return (int)l;
+    }
+}
