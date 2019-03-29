@@ -1,3 +1,21 @@
+public boolean judgeSquareSum(int c) {
+        int limit = (int)Math.sqrt(c);
+        int low = 0;
+        while(low<=limit){
+            int sum = low*low + limit*limit;
+            if(c==sum){
+                return true;
+            }
+            if(sum<c){
+               low++;
+            } else {
+               limit--; 
+            }
+        }
+        return false;
+    }
+    
+    
 class Solution {
     public boolean judgeSquareSum(int c) {
         if(c == 0 || isPerfectSquare(c))
