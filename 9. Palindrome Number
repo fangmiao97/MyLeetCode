@@ -1,0 +1,34 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        if(x < 0) return false;
+        else if(x < 10) return true;
+        else {
+            String num = String.valueOf(x);
+            int l = 0;
+            int r = num.length() - 1;
+            while(l < r){
+                if(num.charAt(l) == num.charAt(r)) {
+                l++;
+                r--;
+                }
+                else
+                    return false;
+            }
+            return true;
+            
+        }
+    }
+}
+
+public boolean isPalindrome(int x) {
+    if(x < 0 || (x % 10 == 0 && x != 0))
+        return false;
+    
+    int rev = 0;
+    while(x > rev) { //当前面的数字小于等于后面翻转的数字时，就到中间了
+        rev = rev * 10 + x % 10;
+        x /= 10;
+    }
+    
+    return (x == rev || x == rev / 10);
+}
