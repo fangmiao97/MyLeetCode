@@ -1,0 +1,21 @@
+//将这一题和linked List II联系起来
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int slow = nums[0];
+        int fast = nums[0];
+        
+        do{
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }while(slow != fast);
+        
+        int head = nums[0];
+        while(head != slow) {
+            head = nums[head];
+            slow = nums[slow];
+        }
+        
+        return head;
+    }
+}
