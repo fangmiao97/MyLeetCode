@@ -1,0 +1,36 @@
+class Solution {
+    public String reverseOnlyLetters(String S) {
+        StringBuilder reverse = new StringBuilder();
+        for(int i = 0; i < S.length(); i++) {//得到全是字母的反序列
+            char c = S.charAt(i);
+            if(Character.isLetter(S.charAt(i))) {
+                reverse.insert(0, S.charAt(i));
+            }
+        }
+
+        StringBuilder res = new StringBuilder();
+        for(int i = 0, j = 0; i < S.length(); i++) {
+            char c = S.charAt(i);
+            if(Character.isLetter(S.charAt(i))) {//如果这个位置是字母的话，就从字母反序列里面找到对应的字母插进去
+                res.append(reverse.charAt(j));
+                j++;//字母反序列的索引往后移一个
+            }else
+                res.append(c);
+        }
+        
+        return res.toString();
+    }
+}
+
+class Solution {//TWO point
+    public String reverseOnlyLetters(String S) {
+        StringBuilder sb = new StringBuilder(S);
+        for (int i = 0, j = S.length() - 1; i < j; ++i, --j) {
+            while (i < j && !Character.isLetter(sb.charAt(i))) ++i;
+            while (i < j && !Character.isLetter(sb.charAt(j))) --j;
+            sb.setCharAt(i, S.charAt(j));
+            sb.setCharAt(j, S.charAt(i));
+        }
+        return sb.toString();
+    }
+}
