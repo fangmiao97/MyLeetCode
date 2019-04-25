@@ -1,0 +1,36 @@
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        if(nums.length == 1){
+            if(nums[0] == val)
+                return 0;
+            return 1;
+        }
+        
+        if(nums.length == 0)
+            return 0;
+        
+        int ans = 0;
+        int s = 0, f = 0;
+        while(f <= nums.length - 1) {
+            if(nums[s] != val && nums[f] != val) {
+                s++;
+                f++;
+                ans++;
+            } else if(nums[s] != val && nums[f] == val) {
+                s = f;
+                f++;
+                ans += f - s;
+            } else if(nums[s] == val && nums[f] == val) {
+                f++;
+            } else if(nums[s] == val && nums[f] != val) {
+                nums[s] = nums[f];
+                nums[f] = val;
+                s++;
+                f++;
+                ans++;
+            }
+        }
+        
+        return ans;
+    }
+}
