@@ -1,0 +1,26 @@
+class Solution {
+    public boolean repeatedSubstringPattern(String s) {
+        int l = s.length();
+        for(int i = l / 2; i >= 1; i--) {
+            if(l % i == 0) {
+                String subS = s.substring(0,i);
+                int m = l / i;
+                StringBuilder repeatS = new StringBuilder();
+                for(int j = 0; j < m; j++) {
+                    repeatS.append(subS);
+                }
+                if(repeatS.toString().equals(s))
+                    return true;
+            }
+        }
+        return false;
+        
+    }
+}
+
+class Solution {
+    public boolean repeatedSubstringPattern(String s) {
+        String str = s + s;
+        return str.substring(1, str.length() - 1).contains(s);
+    }
+}
