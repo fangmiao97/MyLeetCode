@@ -1,0 +1,27 @@
+class Solution {
+    public int repeatedStringMatch(String A, String B) {
+        int i = 0;
+        String t = "";
+        while(t.length() < B.length()) {//只要长度比B长，就能包含所有情况，不需要一直加下去
+            i++;
+            t += A; 
+        }
+        if(t.indexOf(B) >= 0)
+            return i;
+        t += A;
+        if(t.indexOf(B) >= 0)//刚好等于B长度的话可能不行，就再加一个
+            return i + 1;
+        return -1;
+    }
+}
+
+class Solution {
+    public int repeatedStringMatch(String A, String B) {
+        int q = 1;
+        StringBuilder S = new StringBuilder(A);
+        for (; S.length() < B.length(); q++) S.append(A);
+        if (S.indexOf(B) >= 0) return q;
+        if (S.append(A).indexOf(B) >= 0) return q+1;
+        return -1;
+    }
+}
