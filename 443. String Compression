@@ -1,0 +1,20 @@
+class Solution {
+    public int compress(char[] chars) {
+        int anchor = 0, write = 0;
+        for(int read = 0; read < chars.length; read++) {
+            if(read + 1 == chars.length || chars[read + 1] != chars[read]) {//重复的字符要读完了，现在是最后一个，anchor是这组字符的第一个
+                chars[write] = chars[anchor];
+                write++;//write是写新东西的指针
+                
+                if(read > anchor){//这组字符数目大于一个
+                    for(char c : ("" + (read - anchor + 1)).toCharArray()) {//read-anchor+1是这组相同字符的数目
+                        chars[write] = c;
+                        write++;
+                    }
+                }
+                anchor = read + 1;
+            }
+        }
+        return write;
+    }
+}
