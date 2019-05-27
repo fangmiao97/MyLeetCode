@@ -1,0 +1,39 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        
+        int profit = 0;
+        for(int sell = 1; sell < prices.length; sell++) {
+            for(int buy = 0; buy < sell; buy++) {
+                if(prices[sell] > prices[buy]) {
+                    profit = Math.max(profit, prices[sell] - prices[buy]);
+                }
+            }
+        }
+        return profit;
+    }
+}
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int valleyBuy = Integer.MAX_VALUE;//在最低谷时购买
+        //在最低谷后面的最高峰卖出
+        int profit = 0;
+        for(int i = 0; i < prices.length; i++) {
+            valleyBuy = Math.min(valleyBuy, prices[i]);
+            profit = Math.max(profit, prices[i] - valleyBuy);    
+        }
+        return profit;
+    }
+}
+
+public class Solution {
+    public int maxProfit(int prices[]) {
+        int currentMaxProfit = 0;//目前序列产生的最大利润，如果这个序列例如小于零，则重新开始一个序列
+        int maxProfitEver = 0;//所有序列中最大的利润
+        for(int i = 1; i < prices.length; i++) {
+            currentMaxProfit = Math.max(0, currentMaxProfit += prices[i] - prices[i - 1]);
+            maxProfitEver = Math.max(maxProfitEver, currentMaxProfit);
+        }
+        return maxProfitEver;
+    }
+}
