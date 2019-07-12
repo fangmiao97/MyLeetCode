@@ -1,0 +1,56 @@
+class Solution {
+    public boolean buddyStrings(String A, String B) {
+        if(A.length() != B.length())
+            return false;
+        //如果两个字符串相等的话，如果字符串出现有一种字母大于两个，就是可以交换的，否则就不行。比如aab是true，ab是false
+        if(A.equals(B)) {
+            int[] count = new int[26];
+            for(int i = 0; i < A.length(); i++) {
+                count[A.charAt(i) - 'a']++;
+            }
+            
+            for(int c: count)
+                if(c > 1) return true;
+            return false;
+        }else {//不相等的话，就是判断是否是两个不同，并且两个不同是交叉相等的，否则就AB就不是buddy strings
+            int first = -1, second = -1;
+            for(int i = 0; i < A.length(); i++) {
+                if(A.charAt(i) != B.charAt(i)) {
+                    if(first == -1)//第一个不同
+                        first = i;
+                    else if(second == -1)
+                        second = i;
+                    else
+                        return false;//大于2个不同就false
+                }
+            }
+            //两个不同，且是交叉相同的
+            return (second != -1 && A.charAt(first) == B.charAt(second) && A.charAt(second) == B.charAt(first));
+        }
+        
+        
+    }
+}
+
+class Solution {
+    public boolean buddyStrings(String A, String B) {
+        if(A.length() != B.length())
+            return false;
+        
+        if(A.equals(B)) {
+            Set<Character> s = new HashSet<Character>();
+            for(char c: A.toCharArray())
+                s.add(c);
+            return s.size() < A.length();
+        }
+        
+        List<Integer> diff = new ArrayList<>();
+        for(int i = 0; i < A.length(); i++) {
+            if(A.charAt(i) != B.charAt(i))
+                diff.add(i);
+        }
+        
+        return diff.size() == 2 && A.charAt(diff.get(0)) == B.charAt(diff.get(1)) && A.charAt(diff.get(1)) == B.charAt(diff.get(0));
+    }
+}
+//用了set list耗时
