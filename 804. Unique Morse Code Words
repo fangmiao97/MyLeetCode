@@ -1,0 +1,46 @@
+class Solution {
+    public int uniqueMorseRepresentations(String[] words) {
+        String morseCode[] = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        
+        int res = 0;
+        
+        HashMap<String, Integer> codeMap = new HashMap<>();
+        for(String word : words) {
+            
+            StringBuilder code = new StringBuilder();
+            for(char c : word.toCharArray()) {
+                code.append(morseCode[c - 'a']);
+            }
+            String codeString = code.toString();
+            
+            if(!codeMap.containsKey(codeString)){
+                codeMap.put(code.toString(), 1);
+                res++;
+            }else
+                continue;
+            
+        }
+        
+        return res;
+    }
+}
+
+class Solution {
+    public int uniqueMorseRepresentations(String[] words) {
+        String morseCode[] = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        
+        //使用HashSet
+        Set<String> codeSet = new HashSet();
+        for(String word : words) {
+            
+            StringBuilder code = new StringBuilder();
+            for(char c : word.toCharArray()) {
+                code.append(morseCode[c - 'a']);
+            }
+            codeSet.add(code.toString());
+            
+        }
+        
+        return codeSet.size();
+    }
+}   
