@@ -27,7 +27,36 @@ class Solution {
     }
 }
 
-//递归
+
+class Solution {
+    public boolean validPalindrome(String s) {
+        
+        int head = 0;
+        int tail = s.length() - 1;
+        
+        while(head < tail) {
+            if(s.charAt(head) != s.charAt(tail)) {
+                return isPalindrom(s, head + 1, tail) || isPalindrom(s, head, tail - 1);//如果现在这一位不palindrom的话，看看去掉这一位之后剩下的是不是palindrom的
+            }
+            head++;
+            tail--;
+        }
+        
+        return true;
+    }
+    
+    public boolean isPalindrom(String s, int i, int j) {
+        
+        while(i < j) {
+            if(s.charAt(i) != s.charAt(j))
+                return false;
+            i++;
+            j--;
+        }
+        
+        return true;
+    }
+}
 
 class Solution {
     public boolean isPalindromeRange(String s, int i, int j) {
