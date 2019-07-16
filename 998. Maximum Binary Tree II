@@ -10,15 +10,15 @@
 class Solution {
     public TreeNode insertIntoMaxTree(TreeNode root, int val) {
         
-        if(root == null){
+        if(root == null){//比较到最后的节点了，创建并返回这个节点
             return new TreeNode(val);
         }
-        if(root.val<val){
+        if(root.val < val){//插入的值比现在比较的这个节点大，就先创建这个节点，让左子树为之前要插入的树
             TreeNode head = new TreeNode(val);
             head.left = root;
             return head;
         }
-        root.right = insertIntoMaxTree(root.right, val);
+        root.right = insertIntoMaxTree(root.right, val);//如果插入的值没有当前比较的大，就让它和当前节点的右子树比较
         return root;
     }
 }
