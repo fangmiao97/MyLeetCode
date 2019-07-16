@@ -42,3 +42,35 @@ class Solution {
         return secondSmell;
     }
 }
+
+
+private Integer min;
+    private Integer ans;
+    
+    private void treverse(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        if (min == null) {
+            min = root.val;
+        }
+        else if (ans == null) {
+            if (root.val > min) {
+                ans = root.val;
+            }
+        }
+        else {
+            if (root.val > min && root.val < ans) {
+                ans = root.val;
+            }
+        }
+        treverse(root.left);
+        treverse(root.right);
+    }
+    
+    public int findSecondMinimumValue(TreeNode root) {
+        min = null;
+        ans = null;
+        treverse(root);
+        return ans == null ? -1 : ans;
+    }
