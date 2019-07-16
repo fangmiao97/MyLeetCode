@@ -9,7 +9,6 @@
  */
 class Solution {
     public int findSecondMinimumValue(TreeNode root) {
-        int res = -1;
         int smellest = -1;
         int secondSmell = -1;
         
@@ -38,7 +37,7 @@ class Solution {
             }
         }
         
-        if(secondSmell == Integer.MAX_VALUE) return res;
+        if(secondSmell == Integer.MAX_VALUE) return -1;
         
         return secondSmell;
     }
