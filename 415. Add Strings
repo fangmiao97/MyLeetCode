@@ -1,0 +1,91 @@
+class Solution {
+    public String addStrings(String num1, String num2) {
+    
+        int len = Math.max(num1.length(), num2.length());
+        int[] res = new int[len + 1];
+        
+        int a = num1.length() - 1;
+        int b = num2.length() - 1;
+        int carry = 0;
+        int index = 0;
+        while(a >= 0 || b >= 0) {
+            if(a >= 0 && b >= 0) {
+                int prod = (num1.charAt(a) - '0') + (num2.charAt(b) - '0');
+                prod += carry;
+                res[index++] = prod % 10;
+                carry = prod / 10;
+                a--;
+                b--;
+            }else if(a >= 0 && b < 0) {
+                int prod = num1.charAt(a) - '0' + carry;
+                res[index++] = prod % 10;
+                carry = prod / 10;
+                a--;
+            }else if(b >= 0 && a < 0) {
+                int prod = num2.charAt(b) - '0' + carry;
+                res[index++] = prod % 10;
+                carry = prod / 10;
+                b--;
+            }
+        }
+        
+        if(carry != 0)
+            res[index++] = carry;
+        
+        StringBuffer sb = new StringBuffer();
+        for(int i = 0; i < res.length; i++) {
+            sb.insert(0, res[i]);
+        }
+        while (sb.length() != 0 && sb.charAt(0) == '0') sb.deleteCharAt(0);
+        return sb.length() == 0? "0" : sb.toString();
+    }
+}
+
+
+class Solution {
+    public String addStrings(String num1, String num2) {
+        StringBuilder sb = new StringBuilder();
+        int carry = 0;
+        for(int i = num1.length() - 1, j = num2.length() - 1; i >= 0 || j >= 0 || carry == 1; i--, j--){
+            int x = i < 0 ? 0 : num1.charAt(i) - '0';
+            int y = j < 0 ? 0 : num2.charAt(j) - '0';
+            sb.insert(0, (x + y + carry) % 10);
+            carry = (x + y + carry) / 10;
+        }
+        return sb.toString();
+    }
+}
+
+//num1 < num2
+        if(num1.length()>num2.length()){
+            String temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+        int l1 = num1.length();
+        int l2 = num2.length();
+        char[] res = new char[l2+1];
+        int carry = 0;
+        for(int i=0;i<l1;i++){
+            res[l2-i] = (char)(carry + num1.charAt(l1-i-1)+num2.charAt(l2-i-1)-'0');
+            if(res[l2-i]>'9'){
+                carry=1;
+                res[l2-i]-=10;
+            }else{
+                carry=0;
+            }
+            
+        }
+        for(int i=l1;i<l2;i++){
+            res[l2-i] = (char)(carry + num2.charAt(l2-i-1));
+            if(res[l2-i]>'9'){
+                carry=1;
+                res[l2-i]-=10;                
+            }else{
+                carry=0;
+            }
+        }
+        res[0] = (char)(carry+'0');
+        String result = String.valueOf(res);
+        if(res[0]=='0') return result.substring(1);
+        else return result;
