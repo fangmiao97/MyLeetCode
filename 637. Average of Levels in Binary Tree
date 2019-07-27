@@ -1,0 +1,61 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> res = new ArrayList<>();
+        if(root == null)
+            return res;
+        
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while(!queue.isEmpty()) {
+            double sum = 0;
+            int sz = queue.size();
+            for(int i = sz; i > 0; i--) {
+                TreeNode node = queue.poll();
+                sum += node.val;
+                if(node.left != null)
+                    queue.offer(node.left);
+                if(node.right != null)
+                    queue.offer(node.right);
+            }
+            res.add(sum / sz);
+        }
+        
+        return res;
+    }
+}
+
+class Solution {
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Integer> count = new ArrayList<>();
+        List<Double> res = new ArrayList<>();
+        average(root, 0, res, count);
+        for(int i = 0; i < res.size(); i++) {
+            res.set(i, res.get(i) / count.get(i));
+        }
+        return res;
+    }
+    
+    public void average(TreeNode root, int height, List<Double> sum, List<Integer> count) {
+        if(root == null)
+            return;
+        if(height == sum.size()){
+            sum.add(1.0 * root.val);
+            count.add(1);
+        }else {
+            sum.set(height, sum.get(height) + root.val);
+            count.set(height, count.get(height) + 1);
+        }
+        
+        average(root.left, height + 1, sum, count);
+        average(root.right, height + 1, sum, count);
+    }
+}
