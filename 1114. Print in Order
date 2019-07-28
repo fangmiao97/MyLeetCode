@@ -1,0 +1,135 @@
+import java.util.concurrent.*;
+class Foo {
+    
+    Semaphore run2, run3;
+    
+    public Foo() {
+        run2 = new Semaphore(0);
+        run3 = new Semaphore(0);
+    }
+
+    public void first(Runnable printFirst) throws InterruptedException {
+        
+        // printFirst.run() outputs "first". Do not change or remove this line.
+        printFirst.run();
+        run2.release();
+    }
+
+    public void second(Runnable printSecond) throws InterruptedException {
+        
+        // printSecond.run() outputs "second". Do not change or remove this line.
+        run2.acquire();
+        printSecond.run();
+        run3.release();
+    }
+
+    public void third(Runnable printThird) throws InterruptedException {
+        
+        // printThird.run() outputs "third". Do not change or remove this line.
+        run3.acquire();
+        printThird.run();
+    }
+}
+
+
+class Foo {
+    
+    private volatile boolean onePrinted;
+    private volatile boolean twoPrinted;
+    
+    public Foo() {
+        onePrinted = false;
+        twoPrinted = false;
+    }
+
+    public synchronized void first(Runnable printFirst) throws InterruptedException {
+        
+        printFirst.run();
+        onePrinted = true;
+        notifyAll();
+    }
+
+    public synchronized void second(Runnable printSecond) throws InterruptedException {
+    
+        while(!onePrinted){
+            wait();
+        }
+        printSecond.run();
+        twoPrinted = true;
+        notifyAll();
+    }
+
+    public synchronized void third(Runnable printThird) throws InterruptedException {
+        
+        // printThird.run() outputs "third". Do not change or remove this line.
+        while(!twoPrinted){
+            wait();
+        }
+        printThird.run();
+    }
+}
+
+import java.util.concurrent.atomic.AtomicInteger;
+class Foo {
+
+    AtomicInteger count = new AtomicInteger();
+    public Foo() {
+        count.set(0);
+    }
+
+    public void first(Runnable printFirst) throws InterruptedException {
+        
+        // printFirst.run() outputs "first". Do not change or remove this line.
+        while(!count.compareAndSet(0, 1)){}
+        printFirst.run();
+    }
+
+    public void second(Runnable printSecond) throws InterruptedException {
+        
+        // printSecond.run() outputs "second". Do not change or remove this line.
+        while(!count.compareAndSet(1,2)){}
+        printSecond.run();
+    }
+
+    public void third(Runnable printThird) throws InterruptedException {
+        
+        // printThird.run() outputs "third". Do not change or remove this line.
+        while(!count.compareAndSet(2,3)){}
+        printThird.run();
+    }
+}
+
+
+import java.util.concurrent.CountDownLatch;
+class Foo {
+
+    CountDownLatch secondLatch;
+    CountDownLatch thirdLatch;
+
+    public Foo() {
+        this.secondLatch = new CountDownLatch(1);
+        this.thirdLatch = new CountDownLatch(1);
+    }
+
+    public void first(Runnable printFirst) throws InterruptedException {
+        
+        // printFirst.run() outputs "first". Do not change or remove this line.
+        printFirst.run();
+        this.secondLatch.countDown();
+    }
+
+    public void second(Runnable printSecond) throws InterruptedException {
+        
+        // printSecond.run() outputs "second". Do not change or remove this line.
+        this.secondLatch.await();
+        printSecond.run();
+        this.thirdLatch.countDown();
+    }
+
+    public void third(Runnable printThird) throws InterruptedException {
+        
+        // printThird.run() outputs "third". Do not change or remove this line.
+        this.thirdLatch.await();
+        printThird.run();
+    }
+}
