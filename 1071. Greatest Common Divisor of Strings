@@ -1,0 +1,29 @@
+class Solution {
+    public String gcdOfStrings(String str1, String str2) {
+        String s = str1.length() < str2.length() ? str1 : str2;
+        
+        for(int d = 1, len = s.length(); d <= len; d++) {
+            if(len % d != 0)
+                continue;
+            String sub = s.substring(0, len / d);
+            if(str1.replace(sub, "").isEmpty() && str2.replace(sub, "").isEmpty())
+                return sub;
+        }
+        
+        return "";
+    }
+}
+
+class Solution {
+    public String gcdOfStrings(String str1, String str2) {
+        if(str1.length() < str2.length())
+            return gcdOfStrings(str2, str1);
+        else if(!str1.startsWith(str2))
+            return "";
+        else if(str2.isEmpty())
+            return str1;
+        else 
+            return gcdOfStrings(str1.substring(str2.length()), str2);
+        
+    }
+}
