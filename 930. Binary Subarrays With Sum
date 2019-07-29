@@ -1,0 +1,22 @@
+class Solution {
+    public int numSubarraysWithSum(int[] A, int S) {
+        int res = 0;
+        int sum = 0;
+        int[] preSum = new int[A.length + 1];//0 -- A.length
+        
+        for(int i = 0; i < A.length; i++) {
+            sum += A[i];
+            if(sum == S)
+                res++;
+            
+            int complement = sum - S;
+            if(complement >= 0)
+                res += preSum[complement];
+            
+            preSum[sum]++;
+        }
+        
+        return res;
+        
+    }
+}
