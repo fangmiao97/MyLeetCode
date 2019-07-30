@@ -41,3 +41,75 @@ class MyHashMap {
  * int param_2 = obj.get(key);
  * obj.remove(key);
  */
+ 
+ 
+ class MyHashMap {
+    
+    final ListNode[] nodes = new ListNode[10000];
+
+    /** Initialize your data structure here. */
+    public MyHashMap() {
+        
+    }
+    
+    /** value will always be non-negative. */
+    public void put(int key, int value) {
+        int i = index(key);
+        ListNode pre = findPre(i, key);
+        if(pre.next == null)
+            pre.next = new ListNode(key, value);
+        else
+            pre.next.value = value;
+    }
+    
+    /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
+    public int get(int key) {
+        int i = index(key);
+        ListNode pre = findPre(i, key);
+        if(pre.next == null)
+            return -1;
+        else
+            return pre.next.value;
+    }
+    
+    /** Removes the mapping of the specified value key if this map contains a mapping for the key */
+    public void remove(int key) {
+        int i = index(key);
+        ListNode pre = findPre(i, key);
+        if(pre.next != null)
+            pre.next = pre.next.next;
+    }
+    
+    private int index(int key) {
+        return Integer.hashCode(key) % nodes.length;
+    }
+    
+    private ListNode findPre(int index, int key) {
+        if(nodes[index] == null)
+            return nodes[index] = new ListNode(-1, -1);
+        
+        ListNode pre = nodes[index];
+        while(pre.next != null && pre.next.key != key) {
+            pre = pre.next;
+        }
+        return pre;
+    }
+    
+    private static class ListNode {
+        int key, value;
+        ListNode next;
+        
+        ListNode(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+}
+
+/**
+ * Your MyHashMap object will be instantiated and called as such:
+ * MyHashMap obj = new MyHashMap();
+ * obj.put(key,value);
+ * int param_2 = obj.get(key);
+ * obj.remove(key);
+ */
