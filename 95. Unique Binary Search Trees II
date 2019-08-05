@@ -1,0 +1,104 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<TreeNode> generateTrees(int n) {
+        if(n == 0)
+            return new ArrayList<>();
+        return getTreeList(1, n);
+    }
+    
+    public List<TreeNode> getTreeList(int start, int end) {
+        List<TreeNode> subTreeList = new ArrayList<>();
+        
+        if(start > end) {
+            subTreeList.add(null);
+        }
+        
+        for(int i = start; i <= end; i++) {
+            
+            List<TreeNode> leftTrees = getTreeList(start, i - 1);
+            List<TreeNode> rightTrees = getTreeList(i + 1, end);
+            
+            for(TreeNode leftNode : leftTrees) {
+                for(TreeNode rightNode : rightTrees) {
+                    TreeNode root = new TreeNode(i);
+                    root.left = leftNode;
+                    root.right = rightNode;
+                    subTreeList.add(root);
+                }
+            }
+        }
+        
+        return subTreeList;
+            
+        
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<TreeNode> generateTrees(int n) {
+        List<TreeNode> pre = new ArrayList<>();
+        if(n == 0)
+            return pre;
+        
+        pre.add(null);
+        
+        for(int i = 1; i <= n; i++) {
+            List<TreeNode> cur = new ArrayList<>();
+            
+            for(TreeNode root : pre) {
+                TreeNode insert = new TreeNode(i);
+                insert.left = root;
+                cur.add(insert);
+                
+                for(int j = 0; j <= n; j++) {
+                    TreeNode copyTree = treeCopy(root);
+                    TreeNode right = copyTree;
+                    int k = 0;
+                    for(; k < j; k++) {
+                        if(right == null)
+                            break;
+                        right = right.right;
+                    }
+                    
+                    if(right == null)
+                        break;
+                    
+                    TreeNode rightTree = right.right;
+                    insert = new TreeNode(i);
+                    right.right = insert;
+                    insert.left = rightTree;
+                    cur.add(copyTree);
+                }
+            }
+            pre = cur;
+        }
+        
+        return pre;
+    }
+    
+    public TreeNode treeCopy(TreeNode root) {
+        if(root == null)
+            return root;
+        TreeNode newroot = new TreeNode(root.val);
+        newroot.left = treeCopy(root.left);
+        newroot.right = treeCopy(root.right);
+        return newroot;
+    }
+}
