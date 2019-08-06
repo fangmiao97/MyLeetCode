@@ -62,3 +62,31 @@ class Solution {
         return next;
     }
 }
+
+
+class Solution {
+    public int strStr(String haystack, String needle) {
+        int m = haystack.length(), n = needle.length();
+        int[] occ = getOCC(needle);
+        int jump = 0;//不能匹配时，匹配位置向后移动的长度
+        for(int i = 0; i <= m - n; i += jump) {
+            int j = 0;//模式串中已经匹配到的位置
+            while(j < n && haystack.charAt(i + j) == needle.charAt(j))
+                j++;//当前这一位匹配成功
+            if(j == n)
+                return i;
+            jump = i + n < m ? occ[haystack.charAt(i + n)] : 1;
+        }
+        return -1;
+    }
+    
+    public int[] getOCC(String p) {
+        int[] occ = new int[128];
+        Arrays.fill(occ, p.length() + 1);
+        for(int i = 0; i < p.length(); i++) {
+            occ[p.charAt(i)] = p.length() - i;//从串尾到最后出现该字符的长度 
+        }
+        return occ;
+    }
+    
+}
