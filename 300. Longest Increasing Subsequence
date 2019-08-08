@@ -1,0 +1,40 @@
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        return lengthofLTS(nums, Integer.MIN_VALUE, 0);
+    }
+    
+    //从curpos开始(包括curpos)往后，prev是与curpos进行比较的，前面序列的最后一个元素
+    public int lengthofLTS(int[] nums, int prev, int curpos){
+        if(curpos == nums.length)
+            return 0;
+        
+        int taken = 0;
+        if(nums[curpos] > prev)//curpos位置的数大于prev，并且将curpos算在递增序列之内
+            taken = 1 + lengthofLTS(nums, nums[curpos], curpos + 1);
+        
+        //还要考虑不把curpos算进去的情况，如果之前的条件不满足，自然要把这个情况考虑进去；如果满足前一个情况，也要考虑
+        int nottaken = lengthofLTS(nums, prev, curpos + 1);
+        return Math.max(taken, nottaken);
+    }
+}
+
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        if(nums.length == 0)
+            return 0;
+        
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        int res = 1;
+        for(int i = 1; i < dp.length; i++) {
+            int maxv = 0;
+            for(int j = 0; j < i; j++) {
+                if(nums[i] > nums[j])
+                    maxv = Math.max(maxv, dp[j]); 
+            }
+            dp[i] = maxv + 1;
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+}
