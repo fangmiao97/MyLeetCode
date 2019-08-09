@@ -1,0 +1,21 @@
+class Solution {
+    public int countNumbersWithUniqueDigits(int n) {
+        int ans = 0;
+        if(n == 0)
+            return 1;
+        for(int i = 1; i <= n; i++) {
+            ans += f(i);
+        }
+        return ans;
+    }
+    
+    public int f(int k) {
+        if(k == 1)
+            return 10;
+        int res = 9;
+        for(int i = 9; i >= 9 - k + 2; i--) {
+            res *= i;
+        }
+        return res;
+    }
+}
