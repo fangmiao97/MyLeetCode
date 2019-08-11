@@ -10,7 +10,7 @@ class Solution {
         if(d * f == target)
             return 1;
         
-        long[][] dp = new long[d + 1][target + 1];//在d个 f面的情况下有多少种组合
+        int[][] dp = new int[d + 1][target + 1];//在d个 f面的情况下有多少种组合
         for(int i = 1; i<= f; i++){
             //只有一个骰子
             if(i <= target)
@@ -23,13 +23,13 @@ class Solution {
                     dp[i][j] = 0;
                     continue;
                 }
-                for(int n = 1; n <= f; n++) {
-                    dp[i][j] += (j - n >= 1 ? dp[i - 1][j - n] % m : 0);
+                for(int n = 1; n <= f && n <= j; n++) {
+                    dp[i][j] += dp[i - 1][j - n];
+                    dp[i][j] %= m;
                 }
-                dp[i][j] = dp[i][j] % m;
             }
         }
         
-        return (int)dp[d][target];
+        return dp[d][target];
     }
 }
