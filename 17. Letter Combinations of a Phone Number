@@ -1,0 +1,35 @@
+class Solution {
+    
+    private static String[][] phone = {{},{},{"a", "b", "c"},
+                                       {"d", "e", "f"},
+                                       {"g", "h", "i"},
+                                       {"j", "k", "l"},
+                                       {"m", "n", "o"},
+                                       {"p", "q", "r", "s"},
+                                       {"t", "u", "v"},
+                                       {"w", "x", "y", "z"}};
+    public List<String> letterCombinations(String digits) {
+        
+        List<String> res = new ArrayList<>();
+        if(digits.length() == 0)
+            return res;
+        
+        int length = digits.length();
+        generate(0, digits, "", res);
+        
+        return res;
+    }
+    
+    public void generate(int position, String digits, String cur, List<String> res){
+        if(position == digits.length()) {
+            res.add(cur);
+            return;
+        }
+        
+        int number = Integer.parseInt(digits.substring(position, position + 1));
+        String[] button = phone[number];
+        for(String letter : button) {
+            generate(position + 1, digits, cur + letter, res);
+        }
+    }
+}
