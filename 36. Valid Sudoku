@@ -1,0 +1,53 @@
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        List<HashMap<Integer, Integer>> rowTables = new ArrayList<>();
+        List<HashMap<Integer, Integer>> colTables = new ArrayList<>();
+        List<HashMap<Integer, Integer>> blockTables = new ArrayList<>();//使用boolean[][]可能更好
+        
+        for(int r = 0; r < 9; r++) {
+            rowTables.add(new HashMap<Integer, Integer>());
+            for(int c = 0; c < 9; c++) {
+                if(r == 0)
+                    colTables.add(new HashMap<Integer, Integer>());
+                if(r % 3 == 0 && c % 3 == 0)
+                    blockTables.add(new HashMap<Integer, Integer>());
+                char valueChar = board[r][c];
+                if(valueChar == '.')
+                    continue;
+                int value = (int)valueChar;
+                if(rowTables.get(r).containsValue(value))
+                    return false;
+                if(colTables.get(c).containsValue(value))
+                    return false;
+                int bnum = c / 3 + (r / 3) * 3;
+                if(blockTables.get(bnum).containsValue(value))
+                    return false;
+                    
+                rowTables.get(r).put(c, value);
+                colTables.get(c).put(r, value);
+                int cellnum = c % 3 + (r % 3) * 3;
+                blockTables.get(bnum).put(cellnum, value);
+            }
+        }
+        
+        return true;
+    }
+}
+
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        Set seen = new HashSet();
+        for(int i = 0; i < 9; i++) {
+            for(int j = 0; j < 9; j++) {
+                char number = board[i][j];
+                if(number != '.') {
+                    if(!seen.add(number + "row" + i) ||
+                      !seen.add(number + "col" + j) ||
+                      !seen.add(number + "bk" + (i / 3) + "-" + (j / 3)))
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+}
