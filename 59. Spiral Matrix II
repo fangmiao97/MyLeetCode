@@ -1,0 +1,24 @@
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] res = new int[n][n];
+        boolean[][] seen = new boolean[n][n];
+        int[] dr = new int[]{0, 1, 0, -1};
+        int[] dc = new int[]{1, 0, -1, 0};
+        int r = 0, c = 0, d = 0;
+        for(int i = 1; i <= n * n; i++) {
+            res[r][c] = i;
+            seen[r][c] = true;
+            int nr = r + dr[d];
+            int nc = c + dc[d];
+            if(nr >= 0 && nr < n && nc >= 0 && nc < n && !seen[nr][nc]) {
+                r = nr;
+                c = nc;
+            } else {
+                d = (d + 1) % 4;
+                r += dr[d];
+                c += dc[d];
+            }
+        }
+        return res;
+    }
+}
