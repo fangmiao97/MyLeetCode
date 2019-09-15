@@ -1,0 +1,25 @@
+class Solution {
+    public void sortColors(int[] nums) {
+        int[] counts = new int[3];
+        for(int num: nums) {
+            counts[num]++;
+        }
+        
+        for(int i = 0; i < nums.length; i++) {
+            if(counts[0] > 0) {
+                nums[i] = 0;
+                counts[0]--;
+                continue;
+            }
+            else if(counts[1] > 0) {
+                nums[i] = 1;
+                counts[1]--;
+                continue;
+            }else if(counts[2] > 0) {
+                nums[i] = 2;
+                counts[2]--;
+                continue;
+            }
+        }
+    }
+}
