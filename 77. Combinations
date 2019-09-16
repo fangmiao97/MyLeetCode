@@ -1,0 +1,42 @@
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> res = new ArrayList<>();
+        backtrack(res, new ArrayList(), 1, n, k);
+        return res;
+    }
+    
+    public void backtrack(List<List<Integer>> res, List<Integer> now, int start, int n, int k) {
+        if(k == 0) {
+            res.add(new ArrayList(now));
+            return;
+        }
+        
+        for(int i = start; i <= n; i++) {
+            now.add(i);
+            backtrack(res, now, i + 1, n, k - 1);
+            now.remove(now.size() - 1);
+        }
+    }
+}
+
+
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> res = new ArrayList<>();
+        backtrack(res, new ArrayList(), 1, n, k);
+        return res;
+    }
+    
+    public void backtrack(List<List<Integer>> res, List<Integer> now, int start, int n, int k) {
+        if(k == 0) {
+            res.add(new ArrayList(now));
+            return;
+        }
+        
+        for(int i = start; i <= n-k + 1; i++) {//在这里的条件换成i <= n-k + 1，因为超过这个范围的i 之后没有足够的数字能构成结果
+            now.add(i);
+            backtrack(res, now, i + 1, n, k - 1);
+            now.remove(now.size() - 1);
+        }
+    }
+}
