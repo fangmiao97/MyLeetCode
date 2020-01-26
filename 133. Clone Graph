@@ -1,0 +1,47 @@
+class Solution {
+    
+    private Map<Node, Node> map = new HashMap<>();
+    public Node cloneGraph(Node node) {
+        return dfsClone(node);
+    }
+    
+    Node dfsClone(Node node) {
+        if(node == null)
+            return null;
+        
+        if(map.containsKey(node))
+            return map.get(node);
+        
+        Node newNode = new Node(node.val);
+        map.put(node, newNode);
+        for(Node neighbor: node.neighbors) {
+            newNode.neighbors.add(dfsClone(neighbor));
+        }
+        return newNode;
+    }
+}
+
+class Solution {
+    public Node cloneGraph(Node node) {
+        if(node == null)
+            return  null;
+        
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+        
+        Map<Node, Node> map = new HashMap<>();
+        map.put(node, new Node(node.val));
+        
+        while(!queue.isEmpty()) {
+            Node curr = queue.poll();
+            for(Node neighbor: curr.neighbors) {
+                if(!map.containsKey(neighbor)) {
+                    map.put(neighbor, new Node(neighbor.val));
+                    queue.add(neighbor);
+                }
+                map.get(curr).neighbors.add(map.get(neighbor));
+            }
+        }
+        return map.get(node);
+    }
+}
